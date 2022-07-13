@@ -40,6 +40,24 @@ class Point:
         self.x = x
         self.y = y
 
+    
+
+    def __str__(self) -> str:
+        return f'x: {self.x}, y: {self.y}'
+
+    class PointFactory:
+        @staticmethod
+        def new_cartesian_point(x,y):
+            return Point(x,y)
+
+        @staticmethod
+        def new_polar_point( rho, theta):
+            return Point(rho * sin(theta), rho * cos(theta))
+
+    # Introducing singleton
+    factory = PointFactory()
+
+class PointFactory:
     @staticmethod
     def new_cartesian_point(x,y):
         return Point(x,y)
@@ -48,13 +66,10 @@ class Point:
     def new_polar_point(rho, theta):
         return Point(rho * sin(theta), rho * cos(theta))
 
-    def __str__(self) -> str:
-        return f'x: {self.x}, y: {self.y}'
-
 if __name__ == "__main__":
     p = Point(2,3)
-    p2 = Point.new_cartesian_point(1,2)
-    p3 = Point.new_polar_point(1,7)
+    p2 = Point.factory.new_cartesian_point(1,2)
+    p3 = Point.factory.new_polar_point(1,7)
 
     print(p)
     print(p2)
