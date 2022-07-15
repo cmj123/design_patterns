@@ -1,4 +1,6 @@
-from abc import ABC 
+from abc import ABC
+from enum import Enum 
+from enum import auto
 
 class HotDrink(ABC):
     def consume(self):
@@ -26,6 +28,34 @@ class CoffeeFactory(HotDrinkFactory):
         print(f'Grind some beans, boil water, pour {amount} ml, enjoy!')
         return Coffee()
 
+class HotDrinkMachine:
+    class AvailableDrink(Enum):
+        COFFEE = auto()
+        TEA = auto()
+
+    factories = []
+    initialised = False 
+
+    def __init__(self) -> None:
+        if not self.initialised:
+            self.initialised = True 
+            for d in self.AvailableDrink:
+                name = d.name.capitalize()
+                factory_name = name + 'Factory'
+                factory_instance = eval(factory_name)()
+                self.factories.append((name, factory_instance))
+
+    def make_drink(self):
+        print('Available Drinks')
+        for f in self.factories:
+            print(f[0])
+
+        s = input(f'Please pick drink (0-{len(self.factories)-1}): ')
+        idx = int(s)
+        s = input(f'Specify amount: ')
+        amount = int(s)
+        return self.factories[idx][1].prepare(amount)
+
 def make_drink(type):
     if type == 'tea':
         return TeaFactory().prepare(200)
@@ -35,6 +65,11 @@ def make_drink(type):
         return None
 
 if __name__ == '__main__':
-    entry =  input(f'What kind of drink would you like?')
-    drink = make_drink(entry)
-    drink.consume
+    # entry =  input(f'What kind of drink would you like?')
+    # drink = make_drink(entry)
+    # drink.consume
+
+    hdm = HotDrinkMachine()
+
+    hdm.make_drink()
+
