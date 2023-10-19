@@ -1,3 +1,4 @@
+# pylint: disable=too-few-public-methods
 "The Chair Interface"
 from abc import ABCMeta, abstractmethod
 
