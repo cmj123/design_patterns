@@ -25,4 +25,4 @@ class HouseBuilder(IHouseBuilder):
         return self 
 
     def get_result(self):
-        self.house
+        return self.house
